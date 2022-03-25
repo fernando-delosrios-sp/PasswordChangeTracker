@@ -89,37 +89,37 @@ export class IDNClient {
         return await axios(request);
     }
 
-    async getAccountCreations(): Promise<AxiosResponse> {
-        const accessToken = await this.getAccessToken();
-        const url: string = `${this.idnUrl}/v3/search`;
+    // async getAccountCreations(): Promise<AxiosResponse> {
+    //     const accessToken = await this.getAccessToken();
+    //     const url: string = `${this.idnUrl}/v3/search`;
 
-        let request: AxiosRequestConfig = {
-            method: 'post',
-            baseURL: url,
-            headers: {
-                'Authorization': `Bearer ${accessToken}`,
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            data: {
-                'query': {
-                    'query': `technicalName:ACCOUNT_CREATE_PASSED AND created:[now-${this.period} TO now]`
-                },
-                'indices': [
-                    'events'
-                ],
-                'sort': [
-                    'created'
-                ],
-                'includeNested': false,
-                'queryResultFilter': {
-                    'includes': [
-                        'attributes.accountName', 'attributes.sourceName', 'created', 'target', 'id', 'technicalName'
-                    ]
-                }
-            }
-        }
+    //     let request: AxiosRequestConfig = {
+    //         method: 'post',
+    //         baseURL: url,
+    //         headers: {
+    //             'Authorization': `Bearer ${accessToken}`,
+    //             'Content-Type': 'application/json',
+    //             'Accept': 'application/json'
+    //         },
+    //         data: {
+    //             'query': {
+    //                 'query': `technicalName:ACCOUNT_CREATE_PASSED AND created:[now-${this.period} TO now]`
+    //             },
+    //             'indices': [
+    //                 'events'
+    //             ],
+    //             'sort': [
+    //                 'created'
+    //             ],
+    //             'includeNested': false,
+    //             'queryResultFilter': {
+    //                 'includes': [
+    //                     'attributes.accountName', 'attributes.sourceName', 'created', 'target', 'id', 'technicalName'
+    //                 ]
+    //             }
+    //         }
+    //     }
 
-        return await axios(request);
-    }
+    //     return await axios(request);
+    // }
 }

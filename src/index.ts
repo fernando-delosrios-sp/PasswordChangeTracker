@@ -35,19 +35,10 @@ export const connector = async () => {
             }
         })
         .stdAccountList(async (context: Context, input: undefined, res: Response<StdAccountListOutput>) => {
-            const response1: AxiosResponse = await client.getAccountCreations();
-            const response2: AxiosResponse = await client.getPasswordChanges();
+            const response: AxiosResponse = await client.getPasswordChanges();
             
             let accounts: Map<string,Account> = new Map<string,Account>();
-            for (const ac of response1.data) {
-                if(accounts.has(ac.target.name)) {
-                    accounts.get(ac.target.name)?.addTracking(ac);
-                } else {
-                    accounts.set(ac.target.name, new Account(ac));
-                }
-            }
-
-            for (const pc of response2.data) {
+            for (const pc of response.data) {
                 if(accounts.has(pc.target.name)) {
                     accounts.get(pc.target.name)?.addTracking(pc);
                 } else {
@@ -60,15 +51,11 @@ export const connector = async () => {
             }
         })
         .stdEntitlementList(async (context: Context, input: StdEntitlementListInput, res: Response<StdEntitlementListOutput>) => {
-            const response1: AxiosResponse = await client.getAccountCreations();
-            const response2: AxiosResponse = await client.getPasswordChanges();
+            const response: AxiosResponse = await client.getPasswordChanges();
             
             let trackings: Map<string,Tracking> = new Map<string,Tracking>();
-            for (const ac of response1.data) {
-                trackings.set(ac.id, new Tracking(ac, config.period));
-            }
-            for (const pc of response2.data) {
-                trackings.set(pc.id, new Tracking(pc, config.period));
+            for (const pc of response.data) {
+                trackings.set(pc.id, new Tracking(pc));
             }
 
             for(const tracking of trackings.values()) {
