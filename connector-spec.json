@@ -1,0 +1,94 @@
+{
+	"name": "EDPPasswordChangeTracker",
+	"commands": [
+		"std:account:list",
+		"std:entitlement:list",
+		"std:test-connection"
+	],
+	"sourceConfig": [
+		{
+			"type": "section",
+			"items": [
+				{
+					"key": "idnUrl",
+					"label": "IDN url",
+					"type": "text"
+				},
+				{
+					"key": "patId",
+					"label": "PAT ID",
+					"type": "text"
+				},
+				{
+					"key": "patSecret",
+					"label": "PAT secret",
+					"type": "secret"
+				},
+				{
+					"key": "period",
+					"label": "Password change freeze period in date search notation (e.g. 2d for two days)",
+					"type": "text"
+				}
+			]
+		}
+	],
+	"accountSchema":{
+		"displayAttribute": "name",
+		"identityAttribute": "name",
+		"groupAttribute": "tracking",
+		"attributes":[
+			{
+				"name": "name",
+				"type": "string",
+				"description": ""
+			},
+			{
+				"name": "tracking",
+				"type": "string",
+				"entitlement": true,
+				"managed": true,
+				"multi": true,
+				"description": "Password change tracking"
+			}
+		]
+	},
+  "entitlementSchemas": [
+	{
+		"type": "group",
+		"displayAttribute": "name",
+		"identityAttribute": "id",
+		"attributes": [
+			{
+				"name": "id",
+				"type": "string",
+				"description": ""
+			},
+			{
+				"name": "name",
+				"type": "string",
+				"description": ""
+			},
+			{
+				"name": "sourceName",
+				"type": "string",
+				"description": ""
+			},
+			{
+				"name": "accountName",
+				"type": "string",
+				"description": ""
+			},
+			{
+				"name": "operation",
+				"type": "string",
+				"description": ""
+			},
+			{
+				"name": "lastPasswordChange",
+				"type": "string",
+				"description": ""
+			}
+		]
+	}
+  ]
+}
