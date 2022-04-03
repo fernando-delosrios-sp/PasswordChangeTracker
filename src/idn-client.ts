@@ -6,7 +6,6 @@ export class IDNClient {
     private readonly patId?: string;
     private readonly patSecret?: string;
     private readonly period?: string;
-    private accessToken?: string;
 
     constructor(config: any) {
         this.idnUrl = config.idnUrl;
@@ -17,27 +16,22 @@ export class IDNClient {
 
     async getAccessToken(): Promise<string | undefined> {
         const url: string = `${this.idnUrl}/oauth/token`;
-        console.log(url);
-
-        if (! this.accessToken) {
-            const request: AxiosRequestConfig = {
-                method: 'post',
-                baseURL: url,
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                params: {
-                    client_id: this.patId,
-                    client_secret: this.patSecret,
-                    grant_type: 'client_credentials'
-                }
+        const request: AxiosRequestConfig = {
+            method: 'post',
+            baseURL: url,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            params: {
+                client_id: this.patId,
+                client_secret: this.patSecret,
+                grant_type: 'client_credentials'
             }
-            const response: AxiosResponse = await axios(request);
-            this.accessToken = response.data.access_token;
-        } 
-        
-        return this.accessToken;
+        }
+        const response: AxiosResponse = await axios(request);
+
+        return response.data.access_token;
     }
 
     async testConnection(): Promise<AxiosResponse> {
